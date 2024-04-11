@@ -3,10 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Banner;
-use App\Models\Cart;
-use App\Models\Category;
-use App\Models\Gallery;
-use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -52,20 +48,17 @@ class BannerController extends Controller
                 $first = rand() . '.' . $request->first_banner_image->extension();               
                 $request->first_banner_image->move(('banners'), $first);
             } else {
-                $first_full = "0";
+                $first = "0";
             }
             // 2nd side image
             if ($request->second_banner_image != "") {
-                // $image_n = rand(1000,10000);/
                 $second = rand() . '.' . $request->second_banner_image->extension();
-                // $second_full  =$image_n.$second;
                 $request->second_banner_image->move(('banners'), $second);
             } else {
                 $second = "0";
             }
             // 3rd side image
             if ($request->third_banner_image != "") {
-                // $image_name = rand(1000,10000);/
                 $third = rand() . '.' . $request->third_banner_image->extension();
                 $request->third_banner_image->move(('banners'), $third);
             } else {
@@ -73,7 +66,6 @@ class BannerController extends Controller
             }
             // 4th side image
             if ($request->last_banner_image != "") {
-                // $image_name = rand(1000,10000);
                 $fourth = rand() . '.' . $request->last_banner_image->extension();
                 $request->last_banner_image->move(('banners'), $fourth);
             } else {
@@ -98,9 +90,6 @@ class BannerController extends Controller
 
             $banner->status   =   '0';
             $banner->email =  Auth::user()->email;
-            // echo "<pre>";
-            // print_r($banner);
-            // return $banner; 
             $banner->save();
             return redirect('/admin/banner_list')->with('success', 'Banner Updated Successfully');
 
@@ -121,10 +110,10 @@ class BannerController extends Controller
 
         $keys = Banner::all();
         foreach ($keys as $key) {
-            $rank = 0; //Example.. In real it's variable..
+            $satus = 0; //Example.. In real it's variable..
             DB::table('banner')
                 ->where('id', $key->id)
-                ->update(['status' => $rank]);
+                ->update(['status' => $satus]);
         }
         $user->save();
         return response()->json(['success' => 'Status change successfully.']);
@@ -137,42 +126,5 @@ class BannerController extends Controller
             ->delete();
         return redirect()->back();
     }
-
-    public function postStar(){
-        return 1;
-    }
-
-
-
-public function newxxx(Request $request)
-// {
-//     $product = Product::all();
-//     return view('Rough.test',compact('product'));
-// }
-{
-    return 1;
-    $gallery =  Gallery::with('product')->get();
-    $products = Product::find(2)->gallery;
-    $product = Gallery::find(2)->product()->get();
-    // dd($product);
-    $cart = Cart::find(1)->product()->get();
-    dd($gallery);
-    //  $product->id;
-    // $cart = Cart::with('product')->get( );
-    $cart = Category::with('product_category')->get();
-
-    // echo "<pre>";
-    // print_r($cart);
-    // die();
-
-    return view('welcome', compact('cart'));
-
-    // $cart = Cart::find(1)->products()->product_name;
-    // $cat
-  
-
-}
-
-
 
 }

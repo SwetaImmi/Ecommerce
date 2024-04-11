@@ -32,7 +32,7 @@
             </div>
             <h4>Hello! Add Your Category</h4>
             <!-- <h6 class="font-weight-light">Sign in to continue.</h6> -->
-            <form class="pt-3" action="category_add" method="post">
+            <form class="pt-3" action="{{url('admin/category_add')}}" method="post">
               @csrf
               <div class="form-group">
                 <input type="text" class="form-control form-control-lg" id="category" name="category" placeholder="Category">

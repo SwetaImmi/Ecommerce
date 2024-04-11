@@ -6,7 +6,7 @@
                     <h2>By Subscribing To Our Newsletter You Can Get 30% Off</h2>
                     <span>Details to details is what makes Hexashop different from the other themes.</span>
                 </div>
-                <form id="subscribe" action="subscription_post" method="post">
+                <form id="subscribe" action="{{url('/new_subscriber')}}" method="post">
                     @csrf
                     <div class="row">
                         @if(Auth::user()== NULL)

@@ -25,28 +25,11 @@ class Product extends Model
         return $this->belongsToMany(User::class, 'order');
     }
 
-
-    public function cart()
-    {
-        return $this->hasOne(Cart::class,'product_id');
-    }
-
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function gallery()
-    {
-        return $this->hasOne(Gallery::class,'products_id');
-    }
-    public function review()
-    {
-        return $this->hasMany(Review::class,'product_id');
-    }
-    public function buy()
-    {
-        return $this->hasMany(Buy::class,'product_id');
-    }
+
 
 }

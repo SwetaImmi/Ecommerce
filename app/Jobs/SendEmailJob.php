@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Mail\JobMail;
 use App\Mail\MyMail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -38,7 +39,7 @@ class SendEmailJob implements ShouldQueue
         foreach ($this->details as $detail) {
             // dd();
             // Example: Send email using MyMail class
-            Mail::to($detail)->send(new MyMail($detail));
+            Mail::to($detail)->send(new JobMail($detail));
         }
         // Mail::to($this->details['email'])->send($email);
     }

@@ -17,7 +17,7 @@
                         </div>
                         @foreach($banner as $items)
                         @if($items->status == 1)
-                        <img src="{{asset('banners/'.$items->main_banner_image)}}" alt="">
+                        <img src="{{asset('banners/'.$items->main_banner_image)}}" alt="" style="height:620px;">
                         @endif
                         @endforeach
                     </div>

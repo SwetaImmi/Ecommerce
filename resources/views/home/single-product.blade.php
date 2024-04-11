@@ -40,7 +40,7 @@
                                     <div class="women-item-carousel">
                                         <div class="owl-women-item owl-carousel button-container">
                                             @foreach($gallery as $image)
-                                            @if($image->product_gallery_id == $product->id )
+                                            @if($image->products_id == $product->id )
                                             <?php $product_images = json_decode($image->product_gallery_image); ?>
                                             <div class="item">
                                                 <div class="thumb">
@@ -85,13 +85,6 @@
                 </div>
                 <div class="col-lg-5">
                     <div class="product_description">
-                        <!-- <nav>
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item"><a href="#">Products</a></li>
-                                    <li class="breadcrumb-item active">Accessories</li>
-                                </ol>
-                            </nav> -->
                         <div class="product_name">
                             <b> {{$product->product_name}}</b>
                             <p> {{$product->product_description}}</p>
@@ -102,11 +95,11 @@
                             <span class="rating-review">35 Ratings & 45 Reviews</span>
                         </div>
                         <div>
-                            <span class="product_price">₹ {{$product->product_price-$product->product_price/10}}</span>
+                            <span class="product_price">₹ {{$product->product_price}}</span>
                             <strike class="product_discount"> <span style='color:black'>₹ {{$product->product_price}}<span>
                             </strike>
                         </div>
-                        <div> <span class="product_saved">You Saved:</span> <span style='color:black'>₹ {{$product->product_price/10}}<span> </div>
+                        <div> <span class="product_saved">You Saved:</span> <span style='color:black'>₹ {{$product->product_price - $product->product_price}}<span> </div>
                         <hr class="singleline">
                         <div> <span class="product_info">
                                 {{$product->product_description}}
@@ -147,8 +140,13 @@
                                 <form action="{{route('cart.add', $product->id)}}" method="post" enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" value="{{ $product->id }}" name="pid">
-                                    <input class="product_quantity" type="number" value="1" name="quantity" style="float: none; margin-top: 30px; margin-right: 5px;">
-                                    <button class="btn btn-primary shop-button" style="margin-top: 2px; ">Add to Cart</button>
+                                    <input type="hidden" value="{{ $product->product_name }}" name="product_name">
+                                    <input type="hidden" value="{{ $product->product_price }}" name="product_price">
+                                    <input type="hidden" value="{{ $product->product_image }}" name="product_image">
+                                    <input type="hidden" value="{{ $product->product_id }}" name="category">
+                                    <input type="hidden" value="1" name="quantity">
+                                    <!-- <input class="product_quantity" type="number" value="1" name="quantity" style="float: none; margin-top: 30px; margin-right: 5px;"> -->
+                                    <button class="btn btn-primary shop-button" style="margin-top: 20px; ">Add to Cart</button>
                                 </form>
                             </div>
 
@@ -158,100 +156,91 @@
                             <div class="col-xs-4">
 
                                 <a class="btn btn-inverse-warning btn-fw" href="{{ url('checkout').'/'. $product->id}}" role="button">
-
                                     BUY
                                 </a>
                             </div>
 
                             <!-- Add To Like end -->
                             <div class="product_fav col-xs-4">
-                                <!-- <span class="btn btn-danger my-3">
-                                    <i class="bi bi-bell"></i>
-                                    <span id="notification_count">0</span>
-                                </span> -->
-
-                                @foreach($notify as $test)
-                                @if($test->product_id == $product->id)
-                                <!-- {{$test->product_id}}teste -->
-                                <!-- < ?php print_r($test); die();    ?> -->
-
-                                @if($test->read == 1)
-                                <div class="input-group">
+                                <form action="{{route('wlist')}}" method="post" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="hidden" value="{{ $product->id }}" name="pid" id="storewishlist">
+                                    <input type="hidden" value="{{ $product->product_name }}" name="product_name">
+                                    <input type="hidden" value="{{ $product->product_price }}" name="product_price">
+                                    <input type="hidden" value="{{ $product->product_image }}" name="product_image">
+                                    <button type="submit"> <i class="fas fa-heart"></i></button>
+                                </form>
+                                <!-- <div class="input-group">
                                     <input type="hidden" name="message" id="message" placeholder="Enter Message" class="form-control" value="{{$product->id}}">
                                 </div>
-                                <button type="submit" id="send_message"> <i class="fas fa-heart" style="color: red;"></i></button>
+                                <button type="submit" id="send_messages"> <i class="fas fa-heart"></i></button>
+                            </div> -->
+
                             </div>
-                            @endif
-                            @endif
-                            @endforeach
-                            <div class="input-group">
-                                <input type="hidden" name="message" id="message" placeholder="Enter Message" class="form-control" value="{{$product->id}}">
-                            </div>
-                            <button type="submit" id="send_message"> <i class="fas fa-heart"></i></button>
                         </div>
-
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row row-underline col-lg-12">
+            <div class="row row-underline col-lg-12">
 
-        <div class="col-md-12"> <span class=" deal-text">Recommended items</span> </div>
-        <div class="col-md-6"> <a href="#" data-abc="true"> <span class="ml-auto view-all"></span> </a> </div>
-    </div>
-    <div class="row">
-
-        @foreach($item as $product)
-        <div class="col-md-3 padding-0">
-
-            <div class="bbb_combo">
-                <div class="bbb_combo_image">
-                    <a href="{{ url('e_commerce').'/'. $product->id  }}">
-                        <img class="bbb_combo_image" src="{{asset('uploads/'.$product->product_image)}}" alt="">
-                    </a>
-                </div>
-                <div class="d-flex flex-row justify-content-start">
-                    <strike style="color:red;">
-                        <span class="fs-10" style="color:black;">₹ {{$product->product_price}}<span> </span></span>
-                    </strike>
-                    <span class="ml-auto"><i class="fa fa-star p-rating">
-
-                        </i><i class="fa fa-star p-rating"></i>
-                        <i class="fa fa-star p-rating"></i>
-                        <i class="fa fa-star p-rating"></i>
-                    </span>
-                </div>
-                <div class="d-flex flex-row justify-content-start" style=" margin-bottom: 13px; "> <span style="margin-top: -4px;">save:₹{{$product->product_price/10}}</span> <span class="ml-auto fs-10">23 Reviews</span> </div>
-                <span>{{$product->product_name}}</span>
+                <div class="col-md-12"> <span class=" deal-text">Recommended items</span> </div>
+                <div class="col-md-6"> <a href="#" data-abc="true"> <span class="ml-auto view-all"></span> </a> </div>
             </div>
-            <div class="col-xs-12" style="margin-left: 36px;">
-                <div class="boxo-pricing-items">
-                    <div class="combo-pricing-item"> <span class="items_text">Total</span> <span class="combo_item_price">₹{{$product->product_price-$product->product_price/10}}.00</span> </div>
-                    <div class="add-both-cart-button">
-                        <form action="{{route('cart.add', $product->id)}}" method="post">
+            <div class="row">
 
-                            @csrf
-                            <input type="hidden" value="{{ $product->id }}" name="pid">
-                            <input type="hidden" value="{{ $product->category }}" name="category">
-                            <input type="hidden" value="1" name="quantity">
-                            <div class="mt-4 ">
-                                <!-- <a class="btn btn-primary btn-lg btn-flat"><i class="fa fa-shopping-cart"></i></a> -->
-                                <button class="btn btn-primary shop-button">Add to Cart</button>
+                @foreach($item as $product)
+                <div class="col-md-3 padding-0">
+
+                    <div class="bbb_combo">
+                        <div class="bbb_combo_image">
+                            <a href="{{ url('e_commerce').'/'. $product->id  }}">
+                                <img class="bbb_combo_image" src="{{asset('uploads/'.$product->product_image)}}" alt="">
+                            </a>
+                        </div>
+                        <div class="d-flex flex-row justify-content-start">
+                            <strike style="color:red;">
+                                <span class="fs-10" style="color:black;">₹ {{$product->product_price}}<span> </span></span>
+                            </strike>
+                            <span class="ml-auto"><i class="fa fa-star p-rating">
+
+                                </i><i class="fa fa-star p-rating"></i>
+                                <i class="fa fa-star p-rating"></i>
+                                <i class="fa fa-star p-rating"></i>
+                            </span>
+                        </div>
+                        <div class="d-flex flex-row justify-content-start" style=" margin-bottom: 13px; "> <span style="margin-top: -4px;">save:₹{{$product->product_price-$product->product_price}}</span> <span class="ml-auto fs-10">23 Reviews</span> </div>
+                        <span>{{$product->product_name}}</span>
+                    </div>
+                    <div class="col-xs-12" style="margin-left: 36px;">
+                        <div class="boxo-pricing-items">
+                            <div class="combo-pricing-item"> <span class="items_text">Total</span> <span class="combo_item_price">₹{{$product->product_price}}.00</span> </div>
+                            <div class="add-both-cart-button">
+                                <form action="{{route('cart.add', $product->id)}}" method="post">
+
+                                    @csrf
+                                    <input type="hidden" value="{{ $product->id }}" name="pid">
+                                    <input type="hidden" value="{{ $product->product_name }}" name="product_name" id="storewishlist">
+                                    <input type="hidden" value="{{ $product->product_price }}" name="product_price">
+                                    <input type="hidden" value="{{ $product->product_image }}" name="product_image">
+                                    <input type="hidden" value="{{ $product->product_id }}" name="category">
+                                    <input type="hidden" value="1" name="quantity">
+                                    <div class="mt-4 ">
+                                        <!-- <a class="btn btn-primary btn-lg btn-flat"><i class="fa fa-shopping-cart"></i></a> -->
+                                        <button class="btn btn-primary shop-button">Add to Cart</button>
+                                    </div>
+
+                                </form>
                             </div>
-
-                        </form>
+                        </div>
                     </div>
+
                 </div>
+                @endforeach
+
             </div>
 
         </div>
-        @endforeach
-
     </div>
-
-</div>
-</div>
 </div>
 
 
@@ -268,5 +257,21 @@
     })
 </script>
 
+
+<!-- <script>
+    $(document).ready(function() {
+        // Assuming you have a button with id "increaseQuantityBtn"
+        $('#storewishlist').click(function() {
+            // Get current quantity from localStorage or default to 0
+            var currentQuantity = localStorage.getItem('product_name') || 0;
+            // Increase quantity by 1
+            currentQuantity++;
+            // Store updated quantity in localStorage
+            localStorage.setItem('product_name', currentQuantity);
+            // Update display with new quantity
+            $('#quantityDisplay').text(currentQuantity);
+        });
+    });
+</script> -->
 
 @endsection

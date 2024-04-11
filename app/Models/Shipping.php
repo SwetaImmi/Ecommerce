@@ -18,6 +18,13 @@ class Shipping extends Model
         'shipping_zip',
         'shipping_mobile',
         'shipping_nearby',
+        'billing_name',
+        'billing_address',
+        'billing_city',
+        'billing_state',
+        'billing_zip',
+        'billing_mobile',
+        'billing_nearby',
     ];
 
 }

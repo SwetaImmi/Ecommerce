@@ -6,15 +6,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Cashier\Billable;
-use Laravel\Cashier\Cashier;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasApiTokens, HasFactory, Notifiable, Billable;
+    use HasApiTokens, HasFactory, Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -28,6 +26,8 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'role',
+        'mobile',
     ];
 
     /**
@@ -51,12 +51,6 @@ class User extends Authenticatable implements JWTSubject
     ];
 
 
-    // public function boot():void
-    // {
-    //     Cashier::useCustomerModel(User::class);
-    // }
-
-
     public function product(): BelongsToMany
     {
         return $this->belongsToMany(Product::class, 'order');
@@ -71,8 +65,6 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [
-            // 'email' => $this->email,
-            // 'name' => $this->name
         ];
     }
 }

@@ -26,7 +26,7 @@ class SendEmail extends Command
      */
     public function handle()
     {
-        Mail::to('recipient@yopmail.com')->send(new \App\Mail\MyMail());
+        Mail::to('recipient@yopmail.com')->send(new \App\Mail\JobMail());
 
         $this->info('Email sent successfully.');
     }

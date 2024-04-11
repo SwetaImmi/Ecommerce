@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\Product;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -21,11 +22,11 @@ class OrderPlaced
      */
 
 
-    public $order;
+    public $orderDetailsArray;
 
-    public function __construct(Order $order)
+    public function __construct(OrderDetail $orderDetailsArray)
     {
-        $this->order = $order;
+        $this->orderDetailsArray = $orderDetailsArray;
     }
 
     /**

@@ -27,7 +27,7 @@
                         </span>
                     </div>
                     <!-- alert -->
-                    <form action="banner" method="post" id="forms" enctype="multipart/form-data">
+                    <form action="{{url('banner')}}" method="post" id="forms" enctype="multipart/form-data">
                         @csrf
                         <p>Main Banner</p>
                         <div class="form-group">

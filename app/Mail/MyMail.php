@@ -32,31 +32,10 @@ public $invoice;
 
     public function build()
     {
-        return $this->subject('Your Invoice')->view('result')
+        return $this->subject('Your Invoice')->view('mail_pages.result')
         ->attachData($this->invoice->pdf(), 'invoice.pdf');
     }
 
-    /**
-     * Get the message envelope.
-     */
-    // public function envelope(): Envelope
-    // {
-       
-    //     return new Envelope(
-    //         subject: 'My Mail',
-    //     );
-    // }
-
-    /**
-     * Get the message content definition.
-     */
-    // public function content(): Content
-    // {
-    //     return new Content(
-    //         view: 'result',
-    //         // this is message content
-    //     );
-    // }
 
     /**
      * Get the attachments for the message.

@@ -7,7 +7,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    You will be charged ${{ number_format($plan->price/100, 2) }} for {{ $plan->name }} 
+                    You will be charged ${{ number_format($plan->price, 2) }} for {{ $plan->name }} 
                 </div>
   
                 <div class="card-body">
@@ -19,19 +19,22 @@
                         <div class="row">
                             <div class="col-xl-4 col-lg-4">
                                 <div class="form-group">
-                                    <label for="">Name</label>
+                                    <!-- <label for="">Name</label> -->
                                     <input type="hidden" name="email" id="card-holder-name" class="form-control" value="{{Auth::user()->email}}" placeholder="Name on the card">
                                     <input type="hidden" name="user_id" id="card-holder-name" class="form-control" value="{{Auth::user()->id}}" placeholder="Name on the card">
-                                    <input type="text" name="name" id="card-holder-name" class="form-control" value="" placeholder="Name on the card">
+                                    <!-- <input type="text" name="name" id="card-holder-name" class="form-control" value="" placeholder="Name on the card"> -->
                                 </div>
                             </div>
                         </div>
   
                         <div class="row">
-                            <div class="col-xl-4 col-lg-4">
+                            
+                            <div class="col-xl-12 col-lg-12">
                                 <div class="form-group">
                                     <label for="">Card details</label>
+
                                     <div id="card-element"></div>
+
                                 </div>
                             </div>
                             <div class="col-xl-12 col-lg-12">
@@ -50,7 +53,7 @@
   
 <script src="https://js.stripe.com/v3/"></script>
 <script>
-    const stripe = Stripe('{{ env('STRIPE_KEY') }}')
+    const stripe = Stripe('{{ env("STRIPE_KEY") }}')
   
     const elements = stripe.elements()
     const cardElement = elements.create('card')

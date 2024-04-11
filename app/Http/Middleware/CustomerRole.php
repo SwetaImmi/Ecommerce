@@ -23,7 +23,7 @@ class CustomerRole
             }elseif(Auth::user()->role == 'User'){
                 return $next($request);
             }
-            elseif (Auth::user()->role == 'customer') { // if the current role is Administrator
+            elseif (Auth::user()->role == 'customer') { // if the current role is Customer
                 return $next($request);
             }
         }

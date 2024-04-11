@@ -10,7 +10,7 @@
               <img src="{{asset('assets/images/logo.png')}}" alt="logo">
             </div>
             <h4>New here?</h4>
-            <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
+            <!-- <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6> -->
             <!-- aklert -->
             @if ($message = Session::get('success'))
             <div class="alert alert-success alert-block">
@@ -29,16 +29,16 @@
 
             <!-- alert -->
 
-            <form action="register_store" method="post" class="pt-3">
+            <form action="{{url('register_store')}}" method="post" class="pt-3">
               @csrf
               <div class="form-group">
-                <input type="text" class="form-control form-control-lg" id="name" placeholder="Username" name="name" autocomplete="OFF">
+                <input type="text" class="form-control form-control-lg" id="name" placeholder="Name" name="name" autocomplete="off">
                 <span> @error('name')
                   <span class="text-danger">{{$message}}</span>
                   @enderror</span>
               </div>
               <div class="form-group">
-                <input type="email" class="form-control form-control-lg" id="email" placeholder="Email" name="email" autocomplete="off">
+                <input type="email" class="form-control form-control-lg" id="email" placeholder="User Email" name="email" autocomplete="off">
                 <span> @error('email')
                   <span class="text-danger">{{$message}}</span>
                   @enderror</span>
@@ -54,24 +54,24 @@
                   @enderror</span>
               </div>
               <div class="form-group">
-                <input type="password" class="form-control form-control-lg" id="password" placeholder="Password" name="password">
+                <input type="password" class="form-control form-control-lg" id="password" placeholder="Password" name="password" autocomplete="off">
                 <span> @error('password')
                   <span class="text-danger">{{$message}}</span>
                   @enderror</span>
               </div>
-              <div class="mb-4">
+              <!-- <div class="mb-4">
                 <div class="form-check">
                   <label class="form-check-label text-muted">
                     <input type="checkbox" class="form-check-input">
                     I agree to all Terms & Conditions
                   </label>
                 </div>
-              </div>
+              </div> -->
               <div class="mt-3">
                 <button type="submit" class="btn btn-inverse-primary btn-fw">SIGN UP</button>
               </div>
               <div class="text-center mt-4 font-weight-light">
-                Already have an account? <a href="login" class="text-primary">Login</a>
+                Already have an account? <a href="{{url('/login')}}" class="text-primary">Login</a>
               </div>
             </form>
           </div>

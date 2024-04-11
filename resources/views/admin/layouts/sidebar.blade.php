@@ -34,6 +34,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="/admin/payment_list">
+              <i class="ti-view-list-alt menu-icon"></i>
+              <span class="menu-title">Payment List Tables</span>
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="/admin/category">
               <i class="ti-pie-chart menu-icon"></i>
               <span class="menu-title">Add categories</span>

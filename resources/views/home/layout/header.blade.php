@@ -3,15 +3,16 @@
         <div class="row">
             <div class="col-12">
                 <nav class="main-nav">
+
                     <!-- ***** Logo Start ***** -->
-                    <a href="/" class="logo">
+                    <a href="/" class="logo" style="margin-left: -150px; margin-top: 10px;">
                         <img src="{{asset('assets1/images/logo.png')}}">
                     </a>
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
                         <li class="scroll-to-section"><a href="/" class="active">Home</a></li>
-                        <li class="scroll-to-section"><a href="product?search=1">Men's</a>
+                        <li class="scroll-to-section"><a href="{{url('product?search=1')}}">Men's</a>
                         </li>
                         <li class="scroll-to-section"><a href="product?search=2">Women's</a></li>
                         <!-- <li class="scroll-to-section"><a href="product_kids">Kid's</a></li> -->
@@ -24,43 +25,89 @@
                                 <!-- <li><a href="contact.html">Contact Us</a></li> -->
                             </ul>
                         </li>
-                        <li class="scroll-to-section" style="    padding-top: 5px;">
-                            <a href="clist"><img src="{{asset('assets1/images/shopping-cart.png')}}" alt="" style="height: 30px; width:25px"></a>
+                        <li class="scroll-to-section" style="padding-top: 5px;">
+                            <a href="{{url('wishlist')}}">
+                                <i class="fas fa-heart"></i>
+                            </a>
 
                         </li>
-                        <span><?php
-                                echo  $categories = App\models\Cart::all()->count()
+                        <li class="scroll-to-section" style="padding-top: 5px;">
+                            <a href="{{url('clist')}}"><img src="{{asset('assets1/images/shopping-cart.png')}}" alt="" style="height: 30px; width:25px"></a>
 
-                                ?></span>
+                        </li>
+                        <span>
+                            @if(Auth::user() == NULL)
+                            <?php $cart = json_decode(request()->cookie('cart'), true) ?? [];
+                            ?>
+                            @if(isset($cart))
+                            <p> {{ count($cart) }}</p>
+                            @endif
+                            @else
+                            @if(Auth::check())
+                            <?php
+                            $count = App\models\Cart::where('user_id', Auth::id())->count();
+                            echo $count;
+                            ?>
+                            @endif
+                            @endif
+
+                        </span>
                         <li>
 
                         </li>
                         <li>
                         </li>
                         <li class="submenu">
-
                             <a href="javascript:;"><img src="{{asset('assets1/images/profile.png')}}" style="height: 30px; width:30px;"></a>
                             <ul>
-                                <li><a href="#">Logout</a></li>
-                                <li><a href="#">Sign In</a></li>
-                                <!-- <li><a href="#">Features Page 3</a></li>
-                                <li><a rel="nofollow" href="https://templatemo.com/page/4" target="_blank">Template Page 4</a></li> -->
+                                @if(Auth::user() != NULL)
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        <i class="ti-power-off text-primary"></i>
+                                        Logout
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: one;">
+                                            @csrf
+                                        </form>
+                                    </a>
+                                    <!-- <a href="{{url('customer_logout')}}">Logout</a> -->
+                                </li>
+                                @else
+                                <li><a href="{{url('signin')}}">Sign In</a></li>
+                                @endif
                             </ul>
-                            <!-- < ?php if (Auth::check()) {   ?> -->
-                                <!-- @if(Auth::user()) -->
-                                {{Auth::user()->name}}
-                                <!-- @endif -->
-                            <!-- < ?php } ?> -->
                         </li>
-
-
+                        @if(Auth::user())
+                            {{Auth::user()->name}}
+                            @endif
                     </ul>
                     <a class='menu-trigger'>
                         <span>Menu</span>
                     </a>
                     <!-- ***** Menu End ***** -->
+
                 </nav>
             </div>
+            <!-- alert -->
+            @if ($message = Session::get('success'))
+            <div id="alert-success" class="alert alert-success alert-block">
+                <strong>{{ $message }}</strong>
+            </div>
+            @endif
+
+
+            @if ($message = Session::get('error'))
+            <div id="alert-success" class="alert alert-danger alert-block">
+                <strong>{{ $message }}</strong>
+            </div>
+            @endif
+
+            <!-- alert -->
         </div>
+
     </div>
 </header>
+<script>
+    setTimeout(function() {
+        document.getElementById('alert-success').style.display = 'none';
+    }, 3000); // 5000 milliseconds = 5 seconds
+</script>

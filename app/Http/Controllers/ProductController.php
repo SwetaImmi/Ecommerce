@@ -6,13 +6,12 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
+    // product details show on dashboard
     public function index(Request $request)
     {
-        
         $product =  Product::latest()->count();
         $products = Product::find($request->id);
         return view('admin.auth.index', ['product' => $product, 'products' => $products]);
@@ -35,18 +34,13 @@ class ProductController extends Controller
             'category' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
-
-           
-
-      
-
             $image = $request->file('image');
             $new_name = rand() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('uploads'), $new_name);
             $product = new Product();
             $product->product_name   =   $request->product_name;
             $product->product_quantity   =   $request->product_quantity;
-            $product->product_category   =   $request->category;
+            $product->category_id   =   $request->category;
             $product->product_price   =   $request->product_price;
             $product->product_description   =   $request->product_description;
             $product->product_image   =   $new_name;
@@ -54,8 +48,6 @@ class ProductController extends Controller
             $product->email =  Auth::user()->email;
             $product->save();
             return redirect('/admin/products_list')->with('success', 'Product Created Successfully');
-           
-      
     }
 
     // Product Edit & Update
@@ -76,7 +68,7 @@ class ProductController extends Controller
         // print_r($image); die('text');   
         $product = Product::find($id);
         $product->product_name =  $request->product_name;
-        $product->product_category =  $product->category;
+        $product->category_id =  $product->category;
         $product->product_quantity =  $request->product_quantity;
         $product->product_price =  $request->product_price;
         $product->product_description =  $request->product_description;
@@ -99,7 +91,7 @@ class ProductController extends Controller
     // Product Delete
     public function product_delete($id)
     {
-        $delete = Product::findOrFail($id)->delete();
+        Product::findOrFail($id)->delete();
         return redirect()->back()->with('success', 'Product Deleted Successfully');
     }
 
@@ -114,7 +106,6 @@ class ProductController extends Controller
     {
         $request->validate([
             'category' => 'required|unique:product_category',
-
         ]);
         $category = new Category();
         $category->category = $request->category;

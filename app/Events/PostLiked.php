@@ -41,6 +41,6 @@ class PostLiked implements ShouldBroadcast
 
     public function broadcastAs()
     {
-        return 'PushNotification';
+        return 'PostLiked';
     }
 }

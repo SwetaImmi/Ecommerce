@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="{{asset('assets1/css/single.css')}}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+    <link rel="stylesheet" href="{{asset('assets1/css/checkout_style.css')}}">
 
     <!-- Notfication -->
     @vite(['resources/css/app.css' , 'resources/js/app.js'])
@@ -485,14 +486,7 @@ https://templatemo.com/tm-571-hexashop
 
         });
     </script>
-    <script>
-        $("document").ready(function() {
-            setTimeout(function() {
-                $("div.success").remove();
-            }, 3000);
-
-        });
-    </script>
+  
 
 
    

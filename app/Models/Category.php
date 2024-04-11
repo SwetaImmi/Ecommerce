@@ -13,8 +13,4 @@ class Category extends Model
         'category',
     ];
 
-    public function product_category()
-    {
-        return $this->hasOne(Product::class);
-    }
 }

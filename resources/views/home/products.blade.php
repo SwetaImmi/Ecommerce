@@ -4,7 +4,7 @@
 
 <!-- ***** Main Banner Area Start(page-heading) ***** -->
 <div class="" id="top">
-    <div class="container">
+    <div class="container"  style="margin-top: 20px;">
         <div class="row">
             <div class="col-lg-12">
                 <div class="inner-content">
@@ -77,10 +77,10 @@
                                 </ul>
                             </div>
 
-                            <img src="{{ asset('uploads/'.$products->image) }}" alt="" style="height: 350px; width:270px;">
+                            <img src="{{ asset('uploads/'.$products->product_image) }}" alt="" style="height: 350px; width:270px;">
                         </div>
                         <div class="down-content">
-                            <!-- <p>{{ $products->product_category }}</p> -->
+                            <!-- <p>{{ $products->category_id }}</p> -->
                             <h4>{{$products->product_name}}</h4>
                             <span>Rs.{{$products->product_price}}</span>
                             <ul class="stars">
